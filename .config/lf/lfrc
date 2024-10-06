@@ -1,0 +1,44 @@
+# Bulkrename selected files
+# See https://www.youtube.com/watch?v=XVBXFlCUbXU
+map br $vimv $fx
+
+# Reverse sort files by time
+set sortby ctime
+set reverse true
+
+# See https://www.joshmedeski.com/posts/manage-files-with-lf/
+set icons
+set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
+
+
+# See https://github.com/gokcehan/lf/wiki/Integrations
+#
+# zoxide
+cmd j %{{
+	result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+cmd ji ${{
+	result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+cmd ja &{{
+        zoxide add "$PWD"
+}}
+map gj push :j<space>
+#
+# trash-cli
+map DD $trash-put $fx
+map Dr $trash-restore
+#
+
+# See https://cbarrete.com/lf.html
+set incsearch
+map * push :glob-select<space>
+
+
+# See https://github.com/gokcehan/lf/wiki/Previews#with-stpv-and-ctpv
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id
