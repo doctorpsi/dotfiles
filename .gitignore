@@ -1,3 +1,4 @@
 .ssh/id*
 .ssh/known_hosts*
 .ssh/authorized_keys
+.config/nvim/.git/
